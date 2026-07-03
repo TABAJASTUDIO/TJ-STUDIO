@@ -19,7 +19,7 @@ export default {
  }
 }
 function H(x){return new Response(x,{headers:{"content-type":"text/html;charset=utf-8"}})}
-function J(x){return Response.json(x)}
+function J(x, init={}){return Response.json(x, init)}
 function E(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 async function sig(data,secret){const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(secret),{name:"HMAC",hash:"SHA-256"},false,["sign"]);const r=await crypto.subtle.sign("HMAC",k,new TextEncoder().encode(data));return [...new Uint8Array(r)].map(b=>b.toString(16).padStart(2,"0")).join("")}
 async function auth(req,env){const c=req.headers.get("cookie")||"",m=c.match(/tj_session=([^;]+)/);if(!m)return null;const [p,s]=m[1].split(".");if(!p||!s)return null;if(s!==await sig(p,env.SESSION_SECRET||""))return null;try{const d=JSON.parse(atob(p));return Date.now()<d.exp?d:null}catch{return null}}
