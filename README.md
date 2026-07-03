@@ -15,3 +15,4 @@ ADMIN_EMAIL
 ADMIN_PASSWORD
 SESSION_SECRET
 6. Redeploy and open /admin.html
+Redeploy trigger
