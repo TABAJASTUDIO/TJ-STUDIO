@@ -274,7 +274,10 @@ document.querySelectorAll("nav button[data-tab]").forEach(button => {
     button.classList.add("active");
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
     $(button.dataset.tab).classList.add("active");
-    title.textContent = button.textContent.replace(/[➕👥📊]/g, "").trim();
+    const titleEl = document.getElementById("title");
+if (titleEl) {
+  titleEl.textContent = button.textContent.replace(/[➕👥📊]/g, "").trim();
+}
   };
 });
 
