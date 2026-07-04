@@ -194,8 +194,10 @@ form.onsubmit = async e => {
     fill(current);
 
     if(isEdit){
-      formTitle.textContent = "Create Identity";
-      form.querySelector("button[type='submit']").textContent = "Create / Save Identity";
+      const formTitleEl2 = document.getElementById("formTitle");
+if (formTitleEl2) formTitleEl2.textContent = "Create Identity";
+      const submitBtn2 = form.querySelector("button[type='submit']");
+if (submitBtn2) submitBtn2.textContent = "Create / Save Identity";
       cancel.classList.add("hidden");
     }
   }catch(err){
