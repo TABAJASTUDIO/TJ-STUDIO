@@ -204,21 +204,34 @@ form.onsubmit = async e => {
 
 window.edit = code => {
   const c = cards.find(x => x.customer_code === code);
-  if(!c) return;
+  if (!c) return;
 
   Object.keys(c).forEach(key => {
-    if(form.elements[key]){
+    if (form.elements[key]) {
       form.elements[key].value = c[key] || "";
     }
   });
 
-  photoBox.innerHTML = c.photo_data ? '<img src="' + c.photo_data + '">' : 'Upload Photo';
-  logoBox.innerHTML = c.logo_data ? '<img src="' + c.logo_data + '">' : 'Upload Logo';
-  formTitle.textContent = "Edit Identity - " + c.customer_code;
-  form.querySelector("button[type='submit']").textContent = "Update Identity";
-  cancel.classList.remove("hidden");
-  document.querySelector('[data-tab="studio"]').click();
+  if (photoBox) photoBox.innerHTML = c.photo_data ? '<img src="' + c.photo_data + '">' : 'Upload Photo';
+  if (logoBox) logoBox.innerHTML = c.logo_data ? '<img src="' + c.logo_data + '">' : 'Upload Logo';
+
+  const formTitleEl = document.getElementById("formTitle");
+  if (formTitleEl) formTitleEl.textContent = "Edit Identity - " + c.customer_code;
+
+  const submitBtn = form.querySelector("button[type='submit']");
+  if (submitBtn) submitBtn.textContent = "Update Identity";
+
+  if (cancel) cancel.classList.remove("hidden");
+
+  const studioBtn = document.querySelector('[data-tab="studio"]');
+  if (studioBtn) studioBtn.click();
+
   fill(c);
+
+  setTimeout(() => {
+    const studioSection = document.getElementById("studio");
+    if (studioSection) studioSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 200);
 };
 
 function copy(value){
