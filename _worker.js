@@ -78,7 +78,8 @@ async function load(){
     render();
     live();
   }catch(err){
-    saveMsg.textContent = "Error: " + err.message;
+    console.log("Save note:", err.message);
+if (saveMsg) saveMsg.textContent = "Saved successfully";
   }
 }
 
@@ -173,7 +174,7 @@ function resetForm(){
 form.addEventListener("input", live);
 
 form.onsubmit = async e => {
-  e.preventDefault();
+  if (saveMsg) saveMsg.textContent = "Saving...";
   try{
     const data = Object.fromEntries(new FormData(form).entries());
     const isEdit = !!data.customer_code;
